@@ -1,0 +1,13 @@
+1. Recupère id module Météo 
+2. Récupère id broche du capteur humidité de ce module météo
+3. Récupère la dernière valeur du capteur d'humidité
+4. Cette valeur est envoyée au PHP
+
+
+Pour kevin :
+
+- Gestion du changement d'heure
+- visu de la prog
+- plusieurs arrosages par jour
+- prereglage ????
+- commande manuelle 
