@@ -26,7 +26,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2015-02-11 10:02:12 +0000</string>
+	<string>2015-04-03 14:07:16 +0000</string>
 	<key>Modifier</key>
 	<string>Quentin chalopin</string>
 	<key>NotesVisible</key>
@@ -128,8 +128,8 @@
 					<integer>135</integer>
 					<key>Points</key>
 					<array>
-						<string>{437.7636184054565, 75.78996425603107}</string>
-						<string>{437.96675349588236, 103.14500761953289}</string>
+						<string>{437.76590535096119, 75.789964008237874}</string>
+						<string>{437.97080265263679, 103.14500335105458}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -1782,8 +1782,8 @@ UART}</string>
 					<integer>171</integer>
 					<key>Points</key>
 					<array>
-						<string>{436.97214329408524, 473.50000016429829}</string>
-						<string>{436.99813267400373, 439.49999989249324}</string>
+						<string>{436.9721162890857, 473.50000016348713}</string>
+						<string>{436.99807980510212, 439.49999983652475}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -2069,7 +2069,7 @@ UART}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{57.000000013880694, 371.869873046875}, {62.5, 38}}</string>
+					<string>{{45.000000013880694, 371.869873046875}, {74.5, 52}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -2118,13 +2118,13 @@ UART}</string>
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc
 
-\f0\fs24 \cf0 VCC\
+\f0\fs24 \cf0 Intensit\'e9 lumineuse\
 }</string>
 					</dict>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{57.000000013880694, 288.28997802734375}, {62.5, 38}}</string>
+					<string>{{13.500000013880694, 288.28997802734375}, {106, 52}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -2173,7 +2173,7 @@ UART}</string>
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc
 
-\f0\fs24 \cf0 VCC\
+\f0\fs24 \cf0 Temp\'e9rature / Taux d'humidit\'e9\
 }</string>
 					</dict>
 				</dict>
@@ -2532,8 +2532,8 @@ UART}</string>
 					<integer>101</integer>
 					<key>Points</key>
 					<array>
-						<string>{435.09919690376921, 46.499994143519508}</string>
-						<string>{435.37329496676125, 103.14499487015243}</string>
+						<string>{435.09919713225531, 46.499994143519508}</string>
+						<string>{435.37329582659379, 103.14499487015243}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -3140,7 +3140,7 @@ UART}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{306.50849775003519, 105.61826494056308}, {61, 38}}</string>
+					<string>{{319.50849775003519, 105.61826494056308}, {35, 38}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -3198,7 +3198,7 @@ UART}</string>
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc
 
-\f0\fs24 \cf0 VCC - 5V\
+\f0\fs24 \cf0 3.3V\
 }</string>
 					</dict>
 					<key>Wrap</key>
@@ -3264,7 +3264,7 @@ UART}</string>
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc
 
-\f0\fs24 \cf0 9 - 15V\
+\f0\fs24 \cf0 9V\
 }</string>
 					</dict>
 				</dict>
@@ -4681,7 +4681,7 @@ UART}</string>
 	<key>WindowInfo</key>
 	<dict>
 		<key>CurrentSheet</key>
-		<integer>2</integer>
+		<integer>1</integer>
 		<key>ExpandedCanvases</key>
 		<array>
 			<dict>
