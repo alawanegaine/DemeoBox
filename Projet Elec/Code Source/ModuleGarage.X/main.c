@@ -10,22 +10,23 @@
 #include <stdint.h>
 #include <delays.h>
 
-#include <pic18f2520.h>
 #include <pic18.h>
-
-#include <usart.h>
 
 #include <xc.h>
 
 #define FOSC 8000000
+#define BUFFER_SIZE 200
 
-char RxBuffer[200] ;
+volatile unsigned char t ;
+volatile unsigned char rcindex ;
+volatile unsigned char RxBuffer[BUFFER_SIZE] ;
+volatile unsigned char TxBuffer[BUFFER_SIZE] ;
 
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
 
 // CONFIG1H
-#pragma config OSC = INTIO67    // Oscillator Selection bits (Internal oscillator block, port function on RA6 and RA7)
+#pragma config OSC = XT    // Oscillator Selection bits (Internal oscillator block, port function on RA6 and RA7)
 #pragma config FCMEN = OFF      // Fail-Safe Clock Monitor Enable bit (Fail-Safe Clock Monitor disabled)
 #pragma config IESO = OFF       // Internal/External Oscillator Switchover bit (Oscillator Switchover mode disabled)
 
@@ -39,8 +40,8 @@ char RxBuffer[200] ;
 #pragma config WDTPS = 32768    // Watchdog Timer Postscale Select bits (1:32768)
 
 // CONFIG3H
-#pragma config CCP2MX = PORTC   // CCP2 MUX bit (CCP2 input/output is multiplexed with RC1)
-#pragma config PBADEN = ON      // PORTB A/D Enable bit (PORTB<4:0> pins are configured as analog input channels on Reset)
+#pragma config CCP2MX = PORTBE   // CCP2 MUX bit (CCP2 input/output is multiplexed with RC1)
+#pragma config PBADEN = OFF      // PORTB A/D Enable bit (PORTB<4:0> pins are configured as analog input channels on Reset)
 #pragma config LPT1OSC = ON     // Low-Power Timer1 Oscillator Enable bit (Timer1 configured for low-power operation)
 #pragma config MCLRE = ON       // MCLR Pin Enable bit (MCLR pin enabled; RE3 input pin disabled)
 
@@ -105,57 +106,57 @@ uint16_t adc_convert(uint8_t channel)
     return (ADRESH<<8)|ADRESL;      // return the result
 }
 
-void init_UART(){
-    TRISC = 0x0 ;
-    baudUSART(9600);
-    OpenUSART(USART_TX_INT_OFF & USART_RX_INT_OFF & USART_ASYNCH_MODE &
-            USART_EIGHT_BIT & USART_CONT_RX & USART_BRGH_LOW, 12) ;
+void init_USART(){
+    TXSTAbits.TXEN = 1 ; // enable transmitter
+    TXSTAbits.BRGH = 1 ; // high baud rate mode
+    RCSTAbits.CREN = 1 ; // enable continous receiving
+
+    // confirgure I/O pins
+    TRISCbits.RC7 = 1 ; // RX pin is input
+    TRISCbits.RC6 = 0 ; // TX pin is output
+
+    SPBRG = 12 ;        // set baud rate to 9600 baud at 8MHz
+
+    PIE1bits.RCIE =  1 ; // enable USART receive interrupt
+    RCSTAbits.SPEN = 1 ; // enable USART
 }
 
-char UART_Read()
-{
-  while(!RCIF); //Waits for Reception to complete
-  return RCREG; //Returns the 8 bit data
+void USART_putc(unsigned char c){
+    while(!TXSTAbits.TRMT); // wait until transmit shift register is empty
+    TXREG = c ; // write character to TXREG and stat transmission
 }
 
-void UART_Read_Text(char *Output, unsigned int length)
-{
-  int i;
-  for(int i=0;i<length;i++)
-    Output[i] = UART_Read();
+void USART_puts(unsigned char *s) {
+    while(*s){
+        USART_putc(*s);  // send character pointed to by s
+        s++ ;           // increase pointer location to the next character
+    }
 }
 
 int main(int argc, char** argv) {
-    TRISCbits.RC3 = 0 ;
-    uint16_t adc_value ;
-    init_adc();
-    init_UART();
+
+    init_USART();
+
+    USART_puts("Init complete!\n");
+
+    INTCONbits.PEIE = 1 ; // enable peripheral interrupts
+    INTCONbits.GIE = 1 ; // enable interrupts
     
     while(1)
     {
-        /*adc_value = adc_convert(0) ;
-        if(adc_value)
-        {
-            LATCbits.LATC3 = 1 ;
-        }
-        else
-        {
-            LATCbits.LATC3 = 0 ;
-        }
-        delay_TLS0101(15000) ;*/
-        UART_Read_Text(RxBuffer,10) ;
-        if(RxBuffer[0] != '\0')
-        {
-            LATCbits.LATC3 = 0 ;
-        }
-        else
-        {
-            LATCbits.LATC3 = 1 ;
-
-        }
-        
+                
     }
 
     return 0;
+}
+
+void interrupt ISR(void){
+    if (PIR1bits.RCIF)  // check if receive interrupt has fired
+    {
+        t = RCREG;      // read received character to buffer
+
+        USART_putc(t) ;
+        PIR1bits.RCIF = 0;      // reset receive interrupt flag
+    }
 }
 
