@@ -12,32 +12,42 @@
 
 #include <pic18.h>
 
+#include <usart.h>
+
 #include <xc.h>
 
 #define FOSC 8000000
-#define BUFFER_SIZE 200
+#define BUFFER_SIZE 50
+
+#define RoueCodeuse1 PORTAbits.RA0
+#define RoueCodeuse2 PORTAbits.RA2
+#define RoueCodeuse4 PORTAbits.RA1
+#define RoueCodeuse8 PORTAbits.RA3
 
 volatile unsigned char t ;
-volatile unsigned char rcindex ;
-volatile unsigned char RxBuffer[BUFFER_SIZE] ;
-volatile unsigned char TxBuffer[BUFFER_SIZE] ;
+int iRx = 0 ;
+int iRxLecture = 0 ;
+char RxBuffer[BUFFER_SIZE] ;
+char TxBuffer[BUFFER_SIZE] ;
 
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
 
 // CONFIG1H
-#pragma config OSC = XT    // Oscillator Selection bits (Internal oscillator block, port function on RA6 and RA7)
+#pragma config OSC = HS    // Oscillator Selection bits (Internal oscillator block, port function on RA6 and RA7)
 #pragma config FCMEN = OFF      // Fail-Safe Clock Monitor Enable bit (Fail-Safe Clock Monitor disabled)
 #pragma config IESO = OFF       // Internal/External Oscillator Switchover bit (Oscillator Switchover mode disabled)
 
-// CONFIG2L
-#pragma config PWRT = OFF       // Power-up Timer Enable bit (PWRT disabled)
-#pragma config BOREN = SBORDIS  // Brown-out Reset Enable bits (Brown-out Reset enabled in hardware only (SBOREN is disabled))
-#pragma config BORV = 3         // Brown Out Reset Voltage bits (Minimum setting)
 
 // CONFIG2H
 #pragma config WDT = OFF        // Watchdog Timer Enable bit (WDT disabled (control is placed on the SWDTEN bit))
 #pragma config WDTPS = 32768    // Watchdog Timer Postscale Select bits (1:32768)
+
+
+// CONFIG2L
+#pragma config PWRT = ON       // Power-up Timer Enable bit (PWRT disabled)
+#pragma config BOREN = SBORDIS  // Brown-out Reset Enable bits (Brown-out Reset enabled in hardware only (SBOREN is disabled))
+#pragma config BORV = 3         // Brown Out Reset Voltage bits (Minimum setting)
 
 // CONFIG3H
 #pragma config CCP2MX = PORTBE   // CCP2 MUX bit (CCP2 input/output is multiplexed with RC1)
@@ -81,82 +91,101 @@ volatile unsigned char TxBuffer[BUFFER_SIZE] ;
 #pragma config EBTRB = OFF      // Boot Block Table Read Protection bit (Boot block (000000-0007FFh) not protected from table reads executed in other blocks)
 
 // function definitions
-void delay_TLS0101(unsigned int delayVal) // delay function
+void delay_TLS0101(unsigned long delayVal) // delay function
 {
-    unsigned int i; // define local variable int
-    for (i = 0; i < delayVal; i++)
+    unsigned long i; // define local variable int
+    for (i = 0; i < 2*delayVal; i++)
     {
         Nop();
     }
 }
 
-void init_adc(void)
-{
-    TRISA = 0b1111 ;
-    ADCON0bits.CHS = 0;
-    ADCON1bits.PCFG = 0b1011 ;
-    ADCON0bits.ADON     = 0b1;  // turn on the ADC
-}
-
-uint16_t adc_convert(uint8_t channel)
-{
-    //ADCON0bits.CHS      = channel;  // select the given channel
-    ADCON0bits.GO       = 0b1;      // start the conversion
-    while(ADCON0bits.DONE);         // wait for the conversion to finish
-    return (ADRESH<<8)|ADRESL;      // return the result
-}
-
 void init_USART(){
     TXSTAbits.TXEN = 1 ; // enable transmitter
-    TXSTAbits.BRGH = 1 ; // high baud rate mode
+    TXSTAbits.BRGH = 1 ;
     RCSTAbits.CREN = 1 ; // enable continous receiving
+
 
     // confirgure I/O pins
     TRISCbits.RC7 = 1 ; // RX pin is input
     TRISCbits.RC6 = 0 ; // TX pin is output
 
-    SPBRG = 12 ;        // set baud rate to 9600 baud at 8MHz
+    SPBRG = 51 ;        // set baud rate to 9600 baud at 8MHz
 
     PIE1bits.RCIE =  1 ; // enable USART receive interrupt
     RCSTAbits.SPEN = 1 ; // enable USART
 }
 
-void USART_putc(unsigned char c){
-    while(!TXSTAbits.TRMT); // wait until transmit shift register is empty
-    TXREG = c ; // write character to TXREG and stat transmission
+void init_IOPin(){
+    ADCON1bits.PCFG = 0b1111 ; // RA<3:0> to digital input
+    TRISAbits.TRISA0 = 1 ;
+    TRISAbits.TRISA1 = 1 ;
+    TRISAbits.TRISA2 = 1 ;
+    TRISAbits.TRISA3 = 1 ;
 }
 
-void USART_puts(unsigned char *s) {
-    while(*s){
-        USART_putc(*s);  // send character pointed to by s
-        s++ ;           // increase pointer location to the next character
+char UART_Read()
+{
+  while(!RCIF);
+  return RCREG;
+}
+
+void UART_Read_Text(char *Output)
+{
+
+}
+
+void UART_Write(char data)
+{
+  while(!TRMT);
+  TXREG = data;
+}
+
+int read_id_module(){
+    int id = 0;
+    if(!RoueCodeuse1){
+        id += 1 ;
     }
+    if(!RoueCodeuse2){
+        id += 2 ;
+    }
+    if(!RoueCodeuse4){
+        id += 4 ;
+    }
+    if(!RoueCodeuse8){
+        id += 8 ;
+    }
+    return id ;
 }
 
 int main(int argc, char** argv) {
 
+    OSCCONbits.IRCF = 0b111 ;
+    OSCTUNEbits.PLLEN = 1 ;
     init_USART();
-
-    USART_puts("Init complete!\n");
+    init_IOPin();
 
     INTCONbits.PEIE = 1 ; // enable peripheral interrupts
     INTCONbits.GIE = 1 ; // enable interrupts
     
     while(1)
     {
-                
+        while(iRxLecture != iRx){
+            UART_Write(RxBuffer[iRxLecture%BUFFER_SIZE]);
+            iRxLecture++ ;
+        }
     }
 
     return 0;
 }
 
 void interrupt ISR(void){
-    if (PIR1bits.RCIF)  // check if receive interrupt has fired
+    //check if the interrupt is caused by RX pin
+    if(PIR1bits.RCIF)
     {
-        t = RCREG;      // read received character to buffer
-
-        USART_putc(t) ;
-        PIR1bits.RCIF = 0;      // reset receive interrupt flag
+        RxBuffer[iRx%BUFFER_SIZE] = UART_Read() ;
+        iRx++ ;
+        PIR1bits.RCIF = 0; // clear rx flag
     }
 }
 

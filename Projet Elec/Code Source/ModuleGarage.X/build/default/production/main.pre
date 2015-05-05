@@ -4760,28 +4760,31 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 20 "main.c"
+# 27 "main.c"
 volatile unsigned char t ;
-volatile unsigned char rcindex ;
-volatile unsigned char RxBuffer[200] ;
-volatile unsigned char TxBuffer[200] ;
+int iRx = 0 ;
+int iRxLecture = 0 ;
+char RxBuffer[200] ;
+char TxBuffer[200] ;
 
 
 
 
 
-#pragma config OSC = RC
+#pragma config OSC = HS
 #pragma config FCMEN = OFF
 #pragma config IESO = OFF
 
 
-#pragma config PWRT = OFF
-#pragma config BOREN = SBORDIS
-#pragma config BORV = 3
-
 
 #pragma config WDT = OFF
 #pragma config WDTPS = 32768
+
+
+
+#pragma config PWRT = ON
+#pragma config BOREN = SBORDIS
+#pragma config BORV = 3
 
 
 #pragma config CCP2MX = PORTBE
@@ -4825,35 +4828,20 @@ volatile unsigned char TxBuffer[200] ;
 #pragma config EBTRB = OFF
 
 
-void delay_TLS0101(unsigned int delayVal)
+void delay_TLS0101(unsigned long delayVal)
 {
-unsigned int i;
-for (i = 0; i < delayVal; i++)
+unsigned long i;
+for (i = 0; i < 2*delayVal; i++)
 {
 __nop();
 }
 }
 
-void init_adc(void)
-{
-TRISA = 0b1111 ;
-ADCON0bits.CHS = 0;
-ADCON1bits.PCFG = 0b1011 ;
-ADCON0bits.ADON = 0b1;
-}
-
-uint16_t adc_convert(uint8_t channel)
-{
-
-ADCON0bits.GO = 0b1;
-while(ADCON0bits.DONE);
-return (ADRESH<<8)|ADRESL;
-}
-
-void init_UART(){
+void init_USART(){
 TXSTAbits.TXEN = 1 ;
 TXSTAbits.BRGH = 1 ;
 RCSTAbits.CREN = 1 ;
+
 
 
 TRISCbits.RC7 = 1 ;
@@ -4865,53 +4853,73 @@ PIE1bits.RCIE = 1 ;
 RCSTAbits.SPEN = 1 ;
 }
 
-void USART_putc(unsigned char c){
-while(!TXSTAbits.TRMT);
-TXREG = c ;
+void init_IOPin(){
+TRISAbits.TRISA0 = 1 ;
+TRISAbits.TRISA1 = 1 ;
+TRISAbits.TRISA2 = 1 ;
+TRISAbits.TRISA3 = 1 ;
 }
 
-void USART_puts(unsigned char *s) {
-while(*s){
-USART_putc(*s);
-s++ ;
+char UART_Read()
+{
+while(!RCIF);
+return RCREG;
 }
+
+void UART_Read_Text(char *Output)
+{
+char c;
+
+}
+
+void UART_Write(char data)
+{
+while(!TRMT);
+TXREG = data;
+}
+
+int read_id_module(){
+int id = 0;
+if(!PORTAbits.RA0){
+id += 1 ;
+}
+if(!PORTAbits.RA1){
+id += 2 ;
+}
+if(!PORTAbits.RA2){
+id += 4 ;
+}
+if(!PORTAbits.RA3){
+id += 8 ;
+}
+return id ;
 }
 
 int main(int argc, char** argv) {
 
-init_UART();
-
-USART_puts("Init complete!\n");
+OSCCONbits.IRCF = 0b111 ;
+OSCTUNEbits.PLLEN = 1 ;
+init_USART();
+init_IOPin();
 
 INTCONbits.PEIE = 1 ;
 INTCONbits.GIE = 1 ;
 
 while(1)
 {
-
+UART_Write(read_id_module()+48);
+delay_TLS0101(30000) ;
 }
 
 return 0;
 }
 
 void interrupt ISR(void){
-if (PIR1bits.RCIF)
+
+if(PIR1bits.RCIF)
 {
-t = RCREG;
-
-
-
-if ( (t != '\n') && (rcindex < 200) )
-{
-RxBuffer[rcindex] = t;
-rcindex++;
-}
-else
-{
-rcindex = 0;
-USART_puts(RxBuffer);
-}
-
+RxBuffer[iRx%200] = UART_Read() ;
+iRx++ ;
 PIR1bits.RCIF = 0;
 }
 }
