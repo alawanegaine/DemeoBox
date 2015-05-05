@@ -9,24 +9,37 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <delays.h>
+#include <string.h>
 
 #include <pic18.h>
-
-#include <usart.h>
 
 #include <xc.h>
 
 #define FOSC 8000000
-#define BUFFER_SIZE 50
+#define BUFFER_SIZE 10
+
+#define module_id '2'
 
 #define RoueCodeuse1 PORTAbits.RA0
 #define RoueCodeuse2 PORTAbits.RA2
 #define RoueCodeuse4 PORTAbits.RA1
 #define RoueCodeuse8 PORTAbits.RA3
 
-volatile unsigned char t ;
+#define Relais1 PORTBbits.RB1
+#define Relais2 PORTBbits.RB0
+#define Relais3 PORTCbits.RC5
+#define Relais4 PORTCbits.RC4
+#define Relais5 PORTCbits.RC3
+#define Relais6 PORTCbits.RC2
+#define Relais7 PORTCbits.RC1
+#define Relais8 PORTCbits.RC0
+
 int iRx = 0 ;
 int iRxLecture = 0 ;
+
+char idModuleRead ;
+char idBrocheRead ;
+char valueBrocheRead ;
 char RxBuffer[BUFFER_SIZE] ;
 char TxBuffer[BUFFER_SIZE] ;
 
@@ -117,11 +130,24 @@ void init_USART(){
 }
 
 void init_IOPin(){
+
+    // configuration des pin pour la roue codeuse
     ADCON1bits.PCFG = 0b1111 ; // RA<3:0> to digital input
     TRISAbits.TRISA0 = 1 ;
     TRISAbits.TRISA1 = 1 ;
     TRISAbits.TRISA2 = 1 ;
     TRISAbits.TRISA3 = 1 ;
+
+    // configuration des pin pour relais de commande
+    TRISCbits.TRISC0 = 0 ;
+    TRISCbits.TRISC1 = 0 ;
+    TRISCbits.TRISC2 = 0 ;
+    TRISCbits.TRISC3 = 0 ;
+    TRISCbits.TRISC4 = 0 ;
+    TRISCbits.TRISC5 = 0 ;
+    
+    TRISBbits.TRISB0 = 0 ;
+    TRISCbits.TRISC1 = 0 ;
 }
 
 char UART_Read()
@@ -130,15 +156,17 @@ char UART_Read()
   return RCREG;
 }
 
-void UART_Read_Text(char *Output)
-{
-
-}
-
 void UART_Write(char data)
 {
   while(!TRMT);
   TXREG = data;
+}
+
+void UART_Write_Text(char *text)
+{
+  int i;
+  for(i=0;text[i]!='\0';i++)
+    UART_Write(text[i]);
 }
 
 int read_id_module(){
@@ -158,6 +186,23 @@ int read_id_module(){
     return id ;
 }
 
+void parseMessage(){
+    idModuleRead = RxBuffer[iRxLecture%BUFFER_SIZE];
+    iRxLecture += 2 ;
+    idBrocheRead = RxBuffer[iRxLecture%BUFFER_SIZE];
+    iRxLecture += 2 ;
+    valueBrocheRead = RxBuffer[iRxLecture%BUFFER_SIZE];
+    iRxLecture += 2 ;
+    iRx = 0 ;
+    iRxLecture = 0 ;
+    /*UART_Write('M') ;
+    UART_Write(idModule);
+    UART_Write('B') ;
+    UART_Write(idBroche);
+    UART_Write('V') ;
+    UART_Write(valueBroche);*/
+}
+
 int main(int argc, char** argv) {
 
     OSCCONbits.IRCF = 0b111 ;
@@ -170,9 +215,66 @@ int main(int argc, char** argv) {
     
     while(1)
     {
-        while(iRxLecture != iRx){
-            UART_Write(RxBuffer[iRxLecture%BUFFER_SIZE]);
-            iRxLecture++ ;
+        if(iRx%BUFFER_SIZE == 5){
+            parseMessage();
+            if(idModuleRead == (read_id_module()+48)){
+                if(idBrocheRead=='1'){
+                    UART_Write_Text("BROCHE 1\n");
+                    if(valueBrocheRead == '1')
+                        Relais1 = 0 ;
+                    else
+                        Relais1 = 1 ;
+                }
+                if(idBrocheRead=='2'){
+                    UART_Write_Text("BROCHE 2\n");
+                    if(valueBrocheRead == '1')
+                        Relais2 = 0 ;
+                    else
+                        Relais2 = 1 ;
+                }
+                if(idBrocheRead=='3'){
+                    UART_Write_Text("BROCHE 3\n");
+                    if(valueBrocheRead == '1')
+                        Relais3 = 0 ;
+                    else
+                        Relais3 = 1 ;
+                }
+                if(idBrocheRead=='4'){
+                    UART_Write_Text("BROCHE 4\n");
+                    if(valueBrocheRead == '1')
+                        Relais4 = 0 ;
+                    else
+                        Relais4 = 1 ;
+                }
+                if(idBrocheRead=='5'){
+                    UART_Write_Text("BROCHE 5\n");
+                    if(valueBrocheRead == '1')
+                        Relais5 = 0 ;
+                    else
+                        Relais5 = 1 ;
+                }
+                if(idBrocheRead=='6'){
+                    UART_Write_Text("BROCHE 6\n");
+                    if(valueBrocheRead == '1')
+                        Relais6 = 0 ;
+                    else
+                        Relais6 = 1 ;
+                }
+                if(idBrocheRead=='7'){
+                    UART_Write_Text("BROCHE 7\n");
+                    if(valueBrocheRead == '1')
+                        Relais7 = 0 ;
+                    else
+                        Relais7 = 1 ;
+                }
+                if(idBrocheRead=='8'){
+                    UART_Write_Text("BROCHE 8\n");
+                    if(valueBrocheRead == '1')
+                        Relais8 = 0 ;
+                    else
+                        Relais8 = 1 ;
+                }
+            }
         }
     }
 

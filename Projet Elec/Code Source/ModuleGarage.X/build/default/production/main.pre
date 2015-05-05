@@ -246,6 +246,38 @@ void Delay1KTCYx(unsigned char);
 # 37
 void Delay10KTCYx(unsigned char);
 
+# 22 "/Applications/microchip/xc8/v1.34/include/string.h"
+extern void * memcpy(void *, const void *, size_t);
+extern void * memmove(void *, const void *, size_t);
+extern void * memset(void *, int, size_t);
+
+# 42
+extern char * strcat(char *, const char *);
+extern char * strcpy(char *, const char *);
+extern char * strncat(char *, const char *, size_t);
+extern char * strncpy(char *, const char *, size_t);
+extern char * strdup(const char *);
+extern char * strtok(char *, const char *);
+
+
+extern int memcmp(const void *, const void *, size_t);
+extern int strcmp(const char *, const char *);
+extern int stricmp(const char *, const char *);
+extern int strncmp(const char *, const char *, size_t);
+extern int strnicmp(const char *, const char *, size_t);
+extern void * memchr(const void *, int, size_t);
+extern size_t strcspn(const char *, const char *);
+extern char * strpbrk(const char *, const char *);
+extern size_t strspn(const char *, const char *);
+extern char * strstr(const char *, const char *);
+extern char * stristr(const char *, const char *);
+extern char * strerror(int);
+extern size_t strlen(const char *);
+extern char * strchr(const char *, int);
+extern char * strichr(const char *, int);
+extern char * strrchr(const char *, int);
+extern char * strrichr(const char *, int);
+
 # 26 "/Applications/microchip/xc8/v1.34/include/htc.h"
 extern const char __xc8_OPTIM_SPEED;
 
@@ -4760,12 +4792,15 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 27 "main.c"
-volatile unsigned char t ;
+# 35 "main.c"
 int iRx = 0 ;
 int iRxLecture = 0 ;
-char RxBuffer[200] ;
-char TxBuffer[200] ;
+
+char idModule[2] ;
+char idBroche[2] ;
+char valueBroche[2];
+char RxBuffer[10] ;
+char TxBuffer[10] ;
 
 
 
@@ -4854,10 +4889,24 @@ RCSTAbits.SPEN = 1 ;
 }
 
 void init_IOPin(){
+
+
+ADCON1bits.PCFG = 0b1111 ;
 TRISAbits.TRISA0 = 1 ;
 TRISAbits.TRISA1 = 1 ;
 TRISAbits.TRISA2 = 1 ;
 TRISAbits.TRISA3 = 1 ;
+
+
+TRISCbits.TRISC0 = 0 ;
+TRISCbits.TRISC1 = 0 ;
+TRISCbits.TRISC2 = 0 ;
+TRISCbits.TRISC3 = 0 ;
+TRISCbits.TRISC4 = 0 ;
+TRISCbits.TRISC5 = 0 ;
+
+TRISBbits.TRISB0 = 0 ;
+TRISCbits.TRISC1 = 0 ;
 }
 
 char UART_Read()
@@ -4866,16 +4915,17 @@ while(!RCIF);
 return RCREG;
 }
 
-void UART_Read_Text(char *Output)
-{
-char c;
-
-}
-
 void UART_Write(char data)
 {
 while(!TRMT);
 TXREG = data;
+}
+
+void UART_Write_Text(char *text)
+{
+int i;
+for(i=0;text[i]!='\0';i++)
+UART_Write(text[i]);
 }
 
 int read_id_module(){
@@ -4883,16 +4933,31 @@ int id = 0;
 if(!PORTAbits.RA0){
 id += 1 ;
 }
-if(!PORTAbits.RA1){
+if(!PORTAbits.RA2){
 id += 2 ;
 }
-if(!PORTAbits.RA2){
+if(!PORTAbits.RA1){
 id += 4 ;
 }
 if(!PORTAbits.RA3){
 id += 8 ;
 }
 return id ;
+}
+
+void parseMessage(){
+idModule[0] = RxBuffer[iRxLecture%10];
+iRxLecture += 2 ;
+idBroche[0] = RxBuffer[iRxLecture%10];
+iRxLecture += 2 ;
+valueBroche[0] = RxBuffer[iRxLecture%10];
+iRxLecture += 2 ;
+UART_Write('M') ;
+UART_Write_Text(idModule);
+UART_Write('B') ;
+UART_Write_Text(idBroche);
+UART_Write('V') ;
+UART_Write_Text(valueBroche);
 }
 
 int main(int argc, char** argv) {
@@ -4907,8 +4972,9 @@ INTCONbits.GIE = 1 ;
 
 while(1)
 {
-UART_Write(read_id_module()+48);
-delay_TLS0101(30000) ;
+if(iRx%10 == 5){
+parseMessage();
+}
 }
 
 return 0;
@@ -4918,7 +4984,7 @@ void interrupt ISR(void){
 
 if(PIR1bits.RCIF)
 {
-RxBuffer[iRx%200] = UART_Read() ;
+RxBuffer[iRx%10] = UART_Read() ;
 iRx++ ;
 PIR1bits.RCIF = 0;
 }
