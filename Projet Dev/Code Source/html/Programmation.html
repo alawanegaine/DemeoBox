@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+     <head>
+          <meta charset="utf-8">
+          <title>DemeoBox</title>
+          <link rel="stylesheet" href="./Ressources/jquery-mobile-theme-083620-0/themes/TEST.css">
+          <link rel="stylesheet" href="./Ressources/jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.css">
+          <script src="./Ressources/jquery.mobile-1.4.4/demos/js/jquery.js"></script>
+          <script src="./Ressources/jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.js"></script>
+          <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+     </head>
+  <body>
+    
+    <header>
+      <img src="Ressources/jardin.jpeg" alt="image DEMEOBOX"/>
+     </header>
+     <label>Selection du module :</label>
+     <select name="listModule" id="listModule">
+          <option value="">Please select a module ...</option>
+     </select>
+
+     <label>Selection de la broche :</label>
+     <select name="listBroche" id="listBroche"></select>
+
+    <label for="select-choice-8" class="select">Selection du jour :</label>
+      <select name="select-choice-8" class="select" id="choixJour" multiple="multiple" data-native-menu="false" data-icon="grid" data-iconpos="left">
+        <option>Jour d'arrosage :</option>
+          <option value="Lundi">Lundi</option>
+          <option value=" Mardi">Mardi</option>
+          <option value=" Mercredi">Mercredi</option>
+          <option value=" Jeudi">Jeudi</option>
+          <option value=" Vendredi">Vendredi</option>
+          <option value=" Samedi">Samedi</option>
+         <option value=" Dimanche">Dimanche</option>
+        </optgroup>
+      </select>
+
+    <form>
+      <label for="time-1">Heure d'arrosage :</label>
+        <input type="time" data-clear-btn="false" name="time-1" id="HeureArrosage" value="">
+      
+      <label for="time-2">Durée d'arrosage :</label>
+        <input type="time" data-clear-btn="true" name="time-2" id="DureeArrosage" value="">
+    </form>
+
+
+    <form>
+      <label for="ValidationHumidite">Arrosage selon l'humidité :</label>
+        <select id="ValidationHumidite" name="ValidationHumidite" data-role="slider">
+          <option value="off">Non</option>
+          <option value="on">Oui</option>
+         </select>
+    </form> 
+       
+
+    <form>
+      <label for="tauxHumidite">Taux d'humidité :</label>
+        <input type="range" name="tauxHumidite" id="tauxHumidite" value="0" min="0" max="100"  /><br /><br /><br /><br />
+    </form>
+
+    <button id="reset"> Remise à zéro </button>
+    
+    <button id="valider"> Valider </button>
+
+
+    <button id="Accueil" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Retour accueil</button><!--bouton retour menu principal -->
+
+    <script src= "./javascript/Prog.js"></script>
+
+    </body>
+</html>

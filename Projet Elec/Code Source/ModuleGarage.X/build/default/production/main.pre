@@ -4796,9 +4796,9 @@ extern __nonreentrant void _delay3(unsigned char);
 int iRx = 0 ;
 int iRxLecture = 0 ;
 
-char idModule[2] ;
-char idBroche[2] ;
-char valueBroche[2];
+char idModuleRead ;
+char idBrocheRead ;
+char valueBrocheRead ;
 char RxBuffer[10] ;
 char TxBuffer[10] ;
 
@@ -4906,7 +4906,16 @@ TRISCbits.TRISC4 = 0 ;
 TRISCbits.TRISC5 = 0 ;
 
 TRISBbits.TRISB0 = 0 ;
-TRISCbits.TRISC1 = 0 ;
+TRISBbits.TRISB1 = 0 ;
+
+PORTBbits.RB1 = 1 ;
+PORTBbits.RB0 = 1 ;
+PORTCbits.RC5 = 1 ;
+PORTCbits.RC4 = 1 ;
+PORTCbits.RC3 = 1 ;
+PORTCbits.RC2 = 1 ;
+PORTCbits.RC1 = 1 ;
+PORTCbits.RC0 = 1 ;
 }
 
 char UART_Read()
@@ -4946,18 +4955,18 @@ return id ;
 }
 
 void parseMessage(){
-idModule[0] = RxBuffer[iRxLecture%10];
+if(RxBuffer[iRxLecture%10]<'0' || RxBuffer[iRxLecture%10]>'9')
+iRxLecture++ ;
+idModuleRead = RxBuffer[iRxLecture%10];
 iRxLecture += 2 ;
-idBroche[0] = RxBuffer[iRxLecture%10];
+idBrocheRead = RxBuffer[iRxLecture%10];
 iRxLecture += 2 ;
-valueBroche[0] = RxBuffer[iRxLecture%10];
+valueBrocheRead = RxBuffer[iRxLecture%10];
 iRxLecture += 2 ;
-UART_Write('M') ;
-UART_Write_Text(idModule);
-UART_Write('B') ;
-UART_Write_Text(idBroche);
-UART_Write('V') ;
-UART_Write_Text(valueBroche);
+iRx = 0 ;
+iRxLecture = 0 ;
+
+# 213
 }
 
 int main(int argc, char** argv) {
@@ -4970,10 +4979,69 @@ init_IOPin();
 INTCONbits.PEIE = 1 ;
 INTCONbits.GIE = 1 ;
 
+UART_Write_Text("Init complete !!\n");
+
 while(1)
 {
 if(iRx%10 == 5){
 parseMessage();
+if(idModuleRead == (read_id_module()+48)){
+if(idBrocheRead=='1'){
+if(valueBrocheRead == '1')
+PORTBbits.RB1 = 0 ;
+else
+PORTBbits.RB1 = 1 ;
+}
+if(idBrocheRead=='2'){
+UART_Write_Text("BROCHE 2\n");
+if(valueBrocheRead == '1')
+PORTBbits.RB0 = 0 ;
+else
+PORTBbits.RB0 = 1 ;
+}
+if(idBrocheRead=='3'){
+UART_Write_Text("BROCHE 3\n");
+if(valueBrocheRead == '1')
+PORTCbits.RC5 = 0 ;
+else
+PORTCbits.RC5 = 1 ;
+}
+if(idBrocheRead=='4'){
+UART_Write_Text("BROCHE 4\n");
+if(valueBrocheRead == '1')
+PORTCbits.RC4 = 0 ;
+else
+PORTCbits.RC4 = 1 ;
+}
+if(idBrocheRead=='5'){
+UART_Write_Text("BROCHE 5\n");
+if(valueBrocheRead == '1')
+PORTCbits.RC3 = 0 ;
+else
+PORTCbits.RC3 = 1 ;
+}
+if(idBrocheRead=='6'){
+UART_Write_Text("BROCHE 6\n");
+if(valueBrocheRead == '1')
+PORTCbits.RC2 = 0 ;
+else
+PORTCbits.RC2 = 1 ;
+}
+if(idBrocheRead=='7'){
+UART_Write_Text("BROCHE 7\n");
+if(valueBrocheRead == '1')
+PORTCbits.RC1 = 0 ;
+else
+PORTCbits.RC1 = 1 ;
+}
+if(idBrocheRead=='8'){
+UART_Write_Text("BROCHE 8\n");
+if(valueBrocheRead == '1')
+PORTCbits.RC0 = 0 ;
+else
+PORTCbits.RC0 = 1 ;
+}
+}
 }
 }
 

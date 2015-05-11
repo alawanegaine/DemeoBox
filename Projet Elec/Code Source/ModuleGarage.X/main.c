@@ -18,8 +18,6 @@
 #define FOSC 8000000
 #define BUFFER_SIZE 10
 
-#define module_id '2'
-
 #define RoueCodeuse1 PORTAbits.RA0
 #define RoueCodeuse2 PORTAbits.RA2
 #define RoueCodeuse4 PORTAbits.RA1
@@ -147,7 +145,16 @@ void init_IOPin(){
     TRISCbits.TRISC5 = 0 ;
     
     TRISBbits.TRISB0 = 0 ;
-    TRISCbits.TRISC1 = 0 ;
+    TRISBbits.TRISB1 = 0 ;
+
+    Relais1 = 1 ;
+    Relais2 = 1 ;
+    Relais3 = 1 ;
+    Relais4 = 1 ;
+    Relais5 = 1 ;
+    Relais6 = 1 ;
+    Relais7 = 1 ;
+    Relais8 = 1 ;
 }
 
 char UART_Read()
@@ -187,6 +194,8 @@ int read_id_module(){
 }
 
 void parseMessage(){
+    if(RxBuffer[iRxLecture%BUFFER_SIZE]<'0' || RxBuffer[iRxLecture%BUFFER_SIZE]>'9')
+        iRxLecture++ ;
     idModuleRead = RxBuffer[iRxLecture%BUFFER_SIZE];
     iRxLecture += 2 ;
     idBrocheRead = RxBuffer[iRxLecture%BUFFER_SIZE];
@@ -212,6 +221,8 @@ int main(int argc, char** argv) {
 
     INTCONbits.PEIE = 1 ; // enable peripheral interrupts
     INTCONbits.GIE = 1 ; // enable interrupts
+
+    UART_Write_Text("Init complete !!\n");
     
     while(1)
     {
@@ -219,7 +230,6 @@ int main(int argc, char** argv) {
             parseMessage();
             if(idModuleRead == (read_id_module()+48)){
                 if(idBrocheRead=='1'){
-                    UART_Write_Text("BROCHE 1\n");
                     if(valueBrocheRead == '1')
                         Relais1 = 0 ;
                     else

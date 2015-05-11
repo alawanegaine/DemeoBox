@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+      <head>
+            <meta charset="utf-8">
+            <title>trigger demo</title>
+            <link rel="stylesheet" href="./Ressources/jquery-mobile-theme-083620-0/themes/TEST.css">
+            <link rel="stylesheet" href="./Ressources/jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.css">
+            <script src="./Ressources/jquery.mobile-1.4.4/demos/js/jquery.js"></script>
+            <script src="./Ressources/jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.js"></script>
+            <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+            <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+      </head>
+      <body>
+            <div data-role="header">
+                  <h1>Formulaire de saisie d'une nouvelle broche</h1>
+            </div>
+
+            <label>Selection du module :</label>
+            <select name="listModule" id="listModule">
+                  <option value="">Please select a module ...</option>
+            </select>
+
+            <label>Selection de la broche</label>
+            <select name="listBroche" id="listBroche"></select>
+
+            <label>Selection du type de broche :</label>
+            <select name="typeBroche" id="typeBroche">
+                  <option value="">Please select a type...</option>
+                  <option value="INTERRUPTEUR">Interrupteur</option>
+                  <option value="CAPTEUR">Capteur</option>
+                  <option value="AUTRE">Autre</option>
+            </select>
+
+            <label>Selection du module météo associé : </label>
+            <select name="selectionModuleMeteo" id="selectionModuleMeteo">
+                  <option value="">Aucun</option>
+            </select>
+
+            <label>Description de la broche :</label>
+            <input type="text" name="descriptionBroche" id="saDescription" value="" placeholder="Description">                  
+            </div>
+
+            <div id="actions">
+                  <button id="submit">Valider</button>
+                  <button id="Retour" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left">Retour</button>
+            </div>
+            
+            <script src="./javascript/CreateInterrupt.js"></script>
+      </body>
+</html>

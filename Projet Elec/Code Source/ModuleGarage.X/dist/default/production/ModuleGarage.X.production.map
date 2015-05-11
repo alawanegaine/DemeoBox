@@ -5,7 +5,7 @@ Linker command line:
 --edf=/Applications/microchip/xc8/v1.34/dat/en_msgs.txt -cs \
   -h+dist/default/production/ModuleGarage.X.production.sym \
   --cmf=dist/default/production/ModuleGarage.X.production.cmf -z -Q18F2520 \
-  -o/tmp/cgtCQaCsp -Mdist/default/production/ModuleGarage.X.production.map \
+  -o/tmp/cgtKQcjZY -Mdist/default/production/ModuleGarage.X.production.map \
   -E1 -ver=XC8 -ASTACK=080h-05ffh -pstack=STACK -ACODE=00h-07FFFh \
   -ACONST=00h-07FFFh -ASMALLCONST=0600h-06FFhx122 \
   -AMEDIUMCONST=0600h-07FFFh -ACOMRAM=01h-07Fh -AABS1=00h-05FFh \
@@ -21,7 +21,7 @@ Linker command line:
   -pfarbss=FARRAM,fardata=FARRAM,nvFARRAM=FARRAM \
   -pintsave_regs=BIGRAM,bigbss=BIGRAM,bigdata=BIGRAM -pbss=RAM \
   -pidata=CODE,irdata=CODE,ibigdata=CODE,ifardata=CODE -prparam=COMRAM \
-  /tmp/cgt6Afz21.obj dist/default/production/ModuleGarage.X.production.obj 
+  /tmp/cgtFhqdbZ.obj dist/default/production/ModuleGarage.X.production.obj 
 
 Object code version is 3.11
 
@@ -33,26 +33,28 @@ Call graph: (short form)
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-/tmp/cgt6Afz21.obj
+/tmp/cgtFhqdbZ.obj
                 end_init                             18       18        4        4       0
                 reset_vec                             0        0        4        0       0
                 idloc                            200000   200000        8   200000       0
                 config                           300000   300000        E   300000       0
 dist/default/production/ModuleGarage.X.production.obj
                 intcode                               8        8       10        4       0
-                text9                               340      340        C        4       0
-                text8                               1F4      1F4       82        4       0
-                intcode_body                         D8       D8       9A        4       0
-                text6                               2EA      2EA       22        4       0
-                text5                               30C      30C       14        4       0
-                text4                               332      332        E        4       0
-                text3                               2B4      2B4       36        4       0
-                text2                               172      172       82        4       0
-                text1                                1C       1C       BC        4       0
-                cstackCOMRAM                          1        1       1F        1       1
-                bssCOMRAM                            20       20       1E        1       1
-                cinit                               320      320       12        4       0
-                text0                               276      276       3E        4       0
+                smallconst                          600      600       5A      300       0
+                text10                              B60      B60        C      32D       0
+                text9                               9DC      9DC       82      32D       0
+                intcode_body                        8C0      8C0       9A      32D       0
+                text7                               B52      B52        E      32D       0
+                text6                               A5E      A5E       4C      32D       0
+                text5                               AF2      AF2       32      32D       0
+                text4                               B3E      B3E       14      32D       0
+                text3                               95A      95A       82      32D       0
+                text2                               7D6      7D6       EA      32D       0
+                text1                               AAA      AAA       48      32D       0
+                text0                               65A      65A      17C      32D       0
+                cstackCOMRAM                          1        1       22        1       1
+                bssCOMRAM                            23       23       1B        1       1
+                cinit                               B24      B24       1A      32D       0
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   STACK          
@@ -61,27 +63,29 @@ TOTAL           Name                               Link     Load   Length     Sp
                 end_init                             18       18        4         0
                 intcode                               8        8       10         0
                 reset_vec                             0        0        4         0
-                text9                               340      340        C         0
-                text8                               1F4      1F4       82         0
-                intcode_body                         D8       D8       9A         0
-                text6                               2EA      2EA       22         0
-                text5                               30C      30C       14         0
-                text4                               332      332        E         0
-                text3                               2B4      2B4       36         0
-                text2                               172      172       82         0
-                text1                                1C       1C       BC         0
-                cinit                               320      320       12         0
-                text0                               276      276       3E         0
+                text10                              B60      B60        C         0
+                text9                               9DC      9DC       82         0
+                intcode_body                        8C0      8C0       9A         0
+                text7                               B52      B52        E         0
+                text6                               A5E      A5E       4C         0
+                text5                               AF2      AF2       32         0
+                text4                               B3E      B3E       14         0
+                text3                               95A      95A       82         0
+                text2                               7D6      7D6       EA         0
+                text1                               AAA      AAA       48         0
+                text0                               65A      65A      17C         0
+                cinit                               B24      B24       1A         0
 
         CLASS   CONST          
 
         CLASS   SMALLCONST     
+                smallconst                          600      600       5A         0
 
         CLASS   MEDIUMCONST    
 
         CLASS   COMRAM         
-                cstackCOMRAM                          1        1       1F         1
-                bssCOMRAM                            20       20       1E         1
+                cstackCOMRAM                          1        1       22         1
+                bssCOMRAM                            23       23       1B         1
 
         CLASS   ABS1           
 
@@ -119,7 +123,9 @@ SEGMENTS        Name                           Load    Length   Top    Selector 
 
                 reset_vec                      000000  000004  000004         0       0  CODE    
                 cstackCOMRAM                   000001  00003D  00003E         1       1  COMRAM  
-                intcode                        000008  000344  00034C         4       0  CODE    
+                intcode                        000008  000014  00001C         4       0  CODE    
+                smallconst                     000600  00005A  00065A       300       0  SMALLCON
+                text0                          00065A  000512  000B6C       32D       0  CODE    
                 idloc                          200000  000008  200008    200000       0  IDLOC   
                 config                         300000  00000E  30000E    300000       0  CONFIG  
 
@@ -135,23 +141,26 @@ UNUSED ADDRESS RANGES
         BANK5            000500-0005FF              100
         BIGRAM           00003E-0005FF              5C2
         CODE             000004-000007                4
-                         00034C-007FFF             7CB4
+                         00001C-0005FF              5E4
+                         000B6C-007FFF             7494
         COMRAM           00003E-00007F               42
         CONST            000004-000007                4
-                         00034C-007FFF             7CB4
+                         00001C-0005FF              5E4
+                         000B6C-007FFF             7494
         EEDATA           F00000-F000FF              100
-        MEDIUMCONST      000600-007FFF             7A00
+        MEDIUMCONST      000B6C-007FFF             7494
         RAM              000080-0005FF              100
         SFR              000F80-000FFF               80
-        SMALLCONST       000600-007FFF              100
+        SMALLCONST       000B6C-007FFF              100
         STACK            000080-0005FF              580
 
                                   Symbol Table
 
 ?___awmod                 cstackCOMRAM 000015
+?_read_id_module          cstackCOMRAM 000015
 ?i2___awmod               cstackCOMRAM 000001
 UART_Write@data           cstackCOMRAM 000015
-UART_Write_Text@i         cstackCOMRAM 000018
+UART_Write_Text@i         cstackCOMRAM 00001A
 UART_Write_Text@text      cstackCOMRAM 000016
 _ADCON1bits               (abs)        000FC1
 _INTCONbits               (abs)        000FF2
@@ -161,10 +170,12 @@ _OSCTUNEbits              (abs)        000F9B
 _PIE1bits                 (abs)        000F9D
 _PIR1bits                 (abs)        000F9E
 _PORTAbits                (abs)        000F80
+_PORTBbits                (abs)        000F81
+_PORTCbits                (abs)        000F82
 _RCIF                     (abs)        007CF5
 _RCREG                    (abs)        000FAE
 _RCSTAbits                (abs)        000FAB
-_RxBuffer                 bssCOMRAM    000020
+_RxBuffer                 bssCOMRAM    000023
 _SPBRG                    (abs)        000FAF
 _TRISAbits                (abs)        000F92
 _TRISBbits                (abs)        000F93
@@ -172,10 +183,10 @@ _TRISCbits                (abs)        000F94
 _TRMT                     (abs)        007D61
 _TXREG                    (abs)        000FAD
 _TXSTAbits                (abs)        000FAC
-_TxBuffer                 bssCOMRAM    00002A
-_UART_Read                text9        000340
-_UART_Write               text4        000332
-_UART_Write_Text          text3        0002B4
+_TxBuffer                 bssCOMRAM    00002D
+_UART_Read                text10       000B60
+_UART_Write               text7        000B52
+_UART_Write_Text          text6        000A5E
 __CFG_BOREN$SBORDIS       (abs)        000000
 __CFG_BORV$3              (abs)        000000
 __CFG_CCP2MX$PORTBE       (abs)        000000
@@ -259,7 +270,7 @@ __Hrdata                  rdata        000000
 __Hreset_vec              reset_vec    000004
 __Hrparam                 rparam       000000
 __Hsfr                    sfr          000000
-__Hsmallconst             smallconst   000000
+__Hsmallconst             smallconst   00065A
 __Hspace_0                (abs)        30000E
 __Hspace_1                (abs)        00003E
 __Hspace_2                (abs)        000000
@@ -269,12 +280,13 @@ __Htemp                   temp         000000
 __Htext                   text         000000
 __Htext0                  text0        000000
 __Htext1                  text1        000000
+__Htext10                 text10       000000
 __Htext2                  text2        000000
 __Htext3                  text3        000000
 __Htext4                  text4        000000
 __Htext5                  text5        000000
 __Htext6                  text6        000000
-__Htext8                  text8        000000
+__Htext7                  text7        000000
 __Htext9                  text9        000000
 __LRAM                    (abs)        000001
 __Labs1                   abs1         000000
@@ -326,7 +338,7 @@ __Lrdata                  rdata        000000
 __Lreset_vec              reset_vec    000000
 __Lrparam                 rparam       000000
 __Lsfr                    sfr          000000
-__Lsmallconst             smallconst   000000
+__Lsmallconst             smallconst   000600
 __Lspace_0                (abs)        000000
 __Lspace_1                (abs)        000000
 __Lspace_2                (abs)        000000
@@ -336,17 +348,18 @@ __Ltemp                   temp         000000
 __Ltext                   text         000000
 __Ltext0                  text0        000000
 __Ltext1                  text1        000000
+__Ltext10                 text10       000000
 __Ltext2                  text2        000000
 __Ltext3                  text3        000000
 __Ltext4                  text4        000000
 __Ltext5                  text5        000000
 __Ltext6                  text6        000000
-__Ltext8                  text8        000000
+__Ltext7                  text7        000000
 __Ltext9                  text9        000000
 __S0                      (abs)        30000E
 __S1                      (abs)        00003E
 __S2                      (abs)        000000
-___awmod                  text2        000172
+___awmod                  text3        00095A
 ___awmod@counter          cstackCOMRAM 000019
 ___awmod@dividend         cstackCOMRAM 000015
 ___awmod@divisor          cstackCOMRAM 000017
@@ -357,34 +370,37 @@ ___param_bank             (abs)        000010
 ___rparam_used            (abs)        000001
 ___sp                     stack        000000
 __accesstop               (abs)        000080
-__activetblptr            (abs)        000000
-__end_of_ISR              intcode_body 000172
-__end_of_UART_Read        text9        00034C
-__end_of_UART_Write       text4        000340
-__end_of_UART_Write_Text  text3        0002EA
-__end_of___awmod          text2        0001F4
-__end_of__initialization  cinit        00032C
-__end_of_init_IOPin       text6        00030C
-__end_of_init_USART       text5        000320
-__end_of_main             text0        0002B4
-__end_of_parseMessage     text1        0000D8
-__end_ofi2___awmod        text8        000276
-__initialization          cinit        000320
+__activetblptr            (abs)        000001
+__end_of_ISR              intcode_body 00095A
+__end_of_UART_Read        text10       000B6C
+__end_of_UART_Write       text7        000B60
+__end_of_UART_Write_Text  text6        000AAA
+__end_of___awmod          text3        0009DC
+__end_of__initialization  cinit        000B30
+__end_of_init_IOPin       text5        000B24
+__end_of_init_USART       text4        000B52
+__end_of_main             text0        0007D6
+__end_of_parseMessage     text2        0008C0
+__end_of_read_id_module   text1        000AF2
+__end_ofi2___awmod        text9        000A5E
+__initialization          cinit        000B24
 __mediumconst             mediumconst  000000
-__pbssCOMRAM              bssCOMRAM    000020
-__pcinit                  cinit        000320
+__pbssCOMRAM              bssCOMRAM    000023
+__pcinit                  cinit        000B24
 __pcstackCOMRAM           cstackCOMRAM 000001
 __pintcode                intcode      000008
-__pintcode_body           intcode_body 0000D8
-__ptext0                  text0        000276
-__ptext1                  text1        00001C
-__ptext2                  text2        000172
-__ptext3                  text3        0002B4
-__ptext4                  text4        000332
-__ptext5                  text5        00030C
-__ptext6                  text6        0002EA
-__ptext8                  text8        0001F4
-__ptext9                  text9        000340
+__pintcode_body           intcode_body 0008C0
+__psmallconst             smallconst   000600
+__ptext0                  text0        00065A
+__ptext1                  text1        000AAA
+__ptext10                 text10       000B60
+__ptext2                  text2        0007D6
+__ptext3                  text3        00095A
+__ptext4                  text4        000B3E
+__ptext5                  text5        000AF2
+__ptext6                  text6        000A5E
+__ptext7                  text7        000B52
+__ptext9                  text9        0009DC
 __ramtop                  ramtop       000600
 __size_of_ISR             (abs)        000000
 __size_of_UART_Read       (abs)        000000
@@ -395,48 +411,51 @@ __size_of_init_IOPin      (abs)        000000
 __size_of_init_USART      (abs)        000000
 __size_of_main            (abs)        000000
 __size_of_parseMessage    (abs)        000000
+__size_of_read_id_module  (abs)        000000
 __size_ofi2___awmod       (abs)        000000
-__smallconst              smallconst   000000
-_iRx                      bssCOMRAM    000034
-_iRxLecture               bssCOMRAM    000036
-_idBroche                 bssCOMRAM    000038
-_idModule                 bssCOMRAM    00003A
-_init_IOPin               text6        0002EA
-_init_USART               text5        00030C
-_main                     text0        000276
-_parseMessage             text1        00001C
-_valueBroche              bssCOMRAM    00003C
-end_of_initialization     cinit        00032C
-i2___awmod                text8        0001F4
+__smallconst              smallconst   000600
+_iRx                      bssCOMRAM    000037
+_iRxLecture               bssCOMRAM    000039
+_idBrocheRead             bssCOMRAM    00003B
+_idModuleRead             bssCOMRAM    00003C
+_init_IOPin               text5        000AF2
+_init_USART               text4        000B3E
+_main                     text0        00065A
+_parseMessage             text2        0007D6
+_read_id_module           text1        000AAA
+_valueBrocheRead          bssCOMRAM    00003D
+end_of_initialization     cinit        000B30
+i2___awmod                text9        0009DC
 i2___awmod@counter        cstackCOMRAM 000005
 i2___awmod@dividend       cstackCOMRAM 000001
 i2___awmod@divisor        cstackCOMRAM 000003
 i2___awmod@sign           cstackCOMRAM 000006
-int_func                  intcode_body 0000D8
+int_func                  intcode_body 0008C0
 intlevel0                 text         000000
 intlevel1                 text         000000
 intlevel2                 text         000000
 intlevel3                 text         000000
+read_id_module@id         cstackCOMRAM 000017
 stackhi                   (abs)        0005FF
 stacklo                   (abs)        000080
 start                     init         000018
-start_initialization      cinit        000320
+start_initialization      cinit        000B24
 
 
 FUNCTION INFORMATION:
 
  *************** function _main *****************
  Defined at:
-		line 202 in file "main.c"
+		line 215 in file "main.c"
  Parameters:    Size  Location     Type
-  argc            2   26[COMRAM] int 
-  argv            3   28[COMRAM] PTR PTR unsigned char 
+  argc            2   27[COMRAM] int 
+  argv            3   29[COMRAM] PTR PTR unsigned char 
  Auto vars:     Size  Location     Type
 		None
  Return value:  Size  Location     Type
-                  2   26[COMRAM] int 
+                  2   27[COMRAM] int 
  Registers used:
-		wreg, fsr2l, fsr2h, status,2, status,0, cstack
+		wreg, fsr2l, fsr2h, status,2, status,0, tblptrl, tblptrh, tblptru, cstack
  Tracked objects:
 		On entry : 
 		On exit  : 
@@ -444,23 +463,55 @@ FUNCTION INFORMATION:
  Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
       Params:         5       0       0       0       0       0       0
       Locals:         0       0       0       0       0       0       0
-      Temps:          0       0       0       0       0       0       0
-      Totals:         5       0       0       0       0       0       0
-Total ram usage:        5 bytes
- Hardware stack levels required when called:    5
+      Temps:          2       0       0       0       0       0       0
+      Totals:         7       0       0       0       0       0       0
+Total ram usage:        7 bytes
+ Hardware stack levels required when called:    4
  This function calls:
+		_UART_Write_Text
 		___awmod
 		_init_IOPin
 		_init_USART
 		_parseMessage
+		_read_id_module
  This function is called by:
 		Startup code after reset
  This function uses a non-reentrant model
 
 
+ *************** function _read_id_module *****************
+ Defined at:
+		line 179 in file "main.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+  id              2   22[COMRAM] int 
+ Return value:  Size  Location     Type
+                  2   20[COMRAM] int 
+ Registers used:
+		wreg, status,2, status,0
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+      Params:         2       0       0       0       0       0       0
+      Locals:         2       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0
+      Totals:         4       0       0       0       0       0       0
+Total ram usage:        4 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    2
+ This function calls:
+		Nothing
+ This function is called by:
+		_main
+ This function uses a non-reentrant model
+
+
  *************** function _parseMessage *****************
  Defined at:
-		line 187 in file "main.c"
+		line 196 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -476,14 +527,12 @@ Total ram usage:        5 bytes
  Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
       Params:         0       0       0       0       0       0       0
       Locals:         0       0       0       0       0       0       0
-      Temps:          0       0       0       0       0       0       0
-      Totals:         0       0       0       0       0       0       0
-Total ram usage:        0 bytes
+      Temps:          1       0       0       0       0       0       0
+      Totals:         1       0       0       0       0       0       0
+Total ram usage:        1 bytes
  Hardware stack levels used:    1
- Hardware stack levels required when called:    4
+ Hardware stack levels required when called:    3
  This function calls:
-		_UART_Write
-		_UART_Write_Text
 		___awmod
  This function is called by:
 		_main
@@ -520,68 +569,6 @@ Total ram usage:        6 bytes
  This function is called by:
 		_parseMessage
 		_main
- This function uses a non-reentrant model
-
-
- *************** function _UART_Write_Text *****************
- Defined at:
-		line 163 in file "main.c"
- Parameters:    Size  Location     Type
-  text            2   21[COMRAM] PTR unsigned char 
-		 -> valueBroche(2), idBroche(2), idModule(2), 
- Auto vars:     Size  Location     Type
-  i               2   23[COMRAM] int 
- Return value:  Size  Location     Type
-		None               void
- Registers used:
-		wreg, fsr2l, fsr2h, status,2, status,0, cstack
- Tracked objects:
-		On entry : 
-		On exit  : 
-		Unchanged: 
- Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
-      Params:         2       0       0       0       0       0       0
-      Locals:         2       0       0       0       0       0       0
-      Temps:          0       0       0       0       0       0       0
-      Totals:         4       0       0       0       0       0       0
-Total ram usage:        4 bytes
- Hardware stack levels used:    1
- Hardware stack levels required when called:    3
- This function calls:
-		_UART_Write
- This function is called by:
-		_parseMessage
- This function uses a non-reentrant model
-
-
- *************** function _UART_Write *****************
- Defined at:
-		line 157 in file "main.c"
- Parameters:    Size  Location     Type
-  data            1    wreg     unsigned char 
- Auto vars:     Size  Location     Type
-  data            1   20[COMRAM] unsigned char 
- Return value:  Size  Location     Type
-		None               void
- Registers used:
-		wreg
- Tracked objects:
-		On entry : 
-		On exit  : 
-		Unchanged: 
- Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
-      Params:         0       0       0       0       0       0       0
-      Locals:         1       0       0       0       0       0       0
-      Temps:          0       0       0       0       0       0       0
-      Totals:         1       0       0       0       0       0       0
-Total ram usage:        1 bytes
- Hardware stack levels used:    1
- Hardware stack levels required when called:    2
- This function calls:
-		Nothing
- This function is called by:
-		_UART_Write_Text
-		_parseMessage
  This function uses a non-reentrant model
 
 
@@ -645,9 +632,71 @@ Total ram usage:        0 bytes
  This function uses a non-reentrant model
 
 
+ *************** function _UART_Write_Text *****************
+ Defined at:
+		line 172 in file "main.c"
+ Parameters:    Size  Location     Type
+  text            2   21[COMRAM] PTR unsigned char 
+		 -> STR_8(10), STR_7(10), STR_6(10), STR_5(10), 
+		 -> STR_4(10), STR_3(10), STR_2(10), STR_1(18), 
+ Auto vars:     Size  Location     Type
+  i               2   25[COMRAM] int 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, status,2, status,0, tblptrl, tblptrh, tblptru, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+      Params:         2       0       0       0       0       0       0
+      Locals:         2       0       0       0       0       0       0
+      Temps:          2       0       0       0       0       0       0
+      Totals:         6       0       0       0       0       0       0
+Total ram usage:        6 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    3
+ This function calls:
+		_UART_Write
+ This function is called by:
+		_main
+ This function uses a non-reentrant model
+
+
+ *************** function _UART_Write *****************
+ Defined at:
+		line 166 in file "main.c"
+ Parameters:    Size  Location     Type
+  data            1    wreg     unsigned char 
+ Auto vars:     Size  Location     Type
+  data            1   20[COMRAM] unsigned char 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+      Params:         0       0       0       0       0       0       0
+      Locals:         1       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0
+      Totals:         1       0       0       0       0       0       0
+Total ram usage:        1 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    2
+ This function calls:
+		Nothing
+ This function is called by:
+		_UART_Write_Text
+ This function uses a non-reentrant model
+
+
  *************** function _ISR *****************
  Defined at:
-		line 222 in file "main.c"
+		line 294 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -709,7 +758,7 @@ Total ram usage:        6 bytes
 
  *************** function _UART_Read *****************
  Defined at:
-		line 151 in file "main.c"
+		line 160 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -741,25 +790,26 @@ MODULE INFORMATION
 
 Module		Function		Class		Link	Load	Size
 /Applications/microchip/xc8/v1.34/sources/common/awmod.c
-		___awmod       		CODE           	0172	0000	131
+		___awmod       		CODE           	095A	0000	131
 
 /Applications/microchip/xc8/v1.34/sources/common/awmod.c estimated size: 131
 
 shared
-		__initializatio		CODE           	0320	0000	13
-		i2___awmod     		CODE           	01F4	0000	131
+		__initializatio		CODE           	0B24	0000	13
+		i2___awmod     		CODE           	09DC	0000	131
 
 shared estimated size: 144
 
 main.c
 		_ISR           		CODE           	0008	0000	171
-		_UART_Read     		CODE           	0340	0000	13
-		_main          		CODE           	0276	0000	63
-		_UART_Write_Tex		CODE           	02B4	0000	55
-		_parseMessage  		CODE           	001C	0000	189
-		_init_USART    		CODE           	030C	0000	21
-		_UART_Write    		CODE           	0332	0000	15
-		_init_IOPin    		CODE           	02EA	0000	35
+		_UART_Read     		CODE           	0B60	0000	13
+		_main          		CODE           	065A	0000	381
+		_UART_Write_Tex		CODE           	0A5E	0000	77
+		_parseMessage  		CODE           	07D6	0000	235
+		_init_USART    		CODE           	0B3E	0000	21
+		_read_id_module		CODE           	0AAA	0000	73
+		_UART_Write    		CODE           	0B52	0000	15
+		_init_IOPin    		CODE           	0AF2	0000	51
 
-main.c estimated size: 562
+main.c estimated size: 1037
 
