@@ -26,7 +26,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2015-05-12 09:19:02 +0000</string>
+	<string>2015-05-13 09:33:06 +0000</string>
 	<key>Modifier</key>
 	<string>Quentin chalopin</string>
 	<key>NotesVisible</key>
@@ -128,8 +128,8 @@
 					<integer>135</integer>
 					<key>Points</key>
 					<array>
-						<string>{437.76607602223726, 75.789963968994201}</string>
-						<string>{437.9711048356188, 103.14500307202165}</string>
+						<string>{437.76607679868096, 75.789963968994201}</string>
+						<string>{437.97110621036268, 103.14500307202142}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -2532,8 +2532,8 @@ UART}</string>
 					<integer>101</integer>
 					<key>Points</key>
 					<array>
-						<string>{435.09919719602266, 46.499994143519508}</string>
-						<string>{435.37329606656107, 103.14499487015243}</string>
+						<string>{435.09919719870885, 46.499994143519508}</string>
+						<string>{435.37329607666965, 103.14499487015243}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -3385,6 +3385,185 @@ UART}</string>
 			<string>1 0/72 in = 1.0000 in</string>
 			<key>GraphicsList</key>
 			<array>
+				<dict>
+					<key>Class</key>
+					<string>Group</string>
+					<key>Graphics</key>
+					<array>
+						<dict>
+							<key>Bounds</key>
+							<string>{{427, 62}, {47.5, 14}}</string>
+							<key>Class</key>
+							<string>ShapedGraphic</string>
+							<key>FitText</key>
+							<string>Vertical</string>
+							<key>Flow</key>
+							<string>Resize</string>
+							<key>ID</key>
+							<integer>107</integer>
+							<key>Shape</key>
+							<string>Rectangle</string>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+							</dict>
+							<key>Text</key>
+							<dict>
+								<key>Pad</key>
+								<integer>0</integer>
+								<key>Text</key>
+								<string>{\rtf1\ansi\ansicpg1252\cocoartf1347\cocoasubrtf570
+\cocoascreenfonts1{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc
+
+\f0\fs24 \cf0 4}</string>
+								<key>VerticalPad</key>
+								<integer>0</integer>
+							</dict>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>ID</key>
+							<integer>108</integer>
+							<key>Points</key>
+							<array>
+								<string>{426, 62}</string>
+								<string>{444, 79}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>stroke</key>
+								<dict>
+									<key>HeadArrow</key>
+									<string>0</string>
+									<key>Legacy</key>
+									<true/>
+									<key>TailArrow</key>
+									<string>0</string>
+								</dict>
+							</dict>
+						</dict>
+					</array>
+					<key>ID</key>
+					<integer>106</integer>
+				</dict>
+				<dict>
+					<key>Class</key>
+					<string>LineGraphic</string>
+					<key>ID</key>
+					<integer>101</integer>
+					<key>Points</key>
+					<array>
+						<string>{435.09919719870885, 46.499994143519508}</string>
+						<string>{435.37329607666965, 103.14499487015243}</string>
+					</array>
+					<key>Style</key>
+					<dict>
+						<key>stroke</key>
+						<dict>
+							<key>HeadArrow</key>
+							<string>FilledArrow</string>
+							<key>Legacy</key>
+							<true/>
+							<key>TailArrow</key>
+							<string>0</string>
+						</dict>
+					</dict>
+					<key>Tail</key>
+					<dict>
+						<key>ID</key>
+						<integer>80</integer>
+					</dict>
+				</dict>
+				<dict>
+					<key>Class</key>
+					<string>Group</string>
+					<key>Graphics</key>
+					<array>
+						<dict>
+							<key>Bounds</key>
+							<string>{{461, 37.999999999999993}, {23, 7.9999999999999973}}</string>
+							<key>Class</key>
+							<string>ShapedGraphic</string>
+							<key>ID</key>
+							<integer>79</integer>
+							<key>Shape</key>
+							<string>Rectangle</string>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+							</dict>
+							<key>Text</key>
+							<dict>
+								<key>Pad</key>
+								<integer>0</integer>
+								<key>Text</key>
+								<string>{\rtf1\ansi\ansicpg1252\cocoartf1347\cocoasubrtf570
+\cocoascreenfonts1{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc
+
+\f0\fs24 \cf0 FP4}</string>
+								<key>VerticalPad</key>
+								<integer>0</integer>
+							</dict>
+							<key>Wrap</key>
+							<string>NO</string>
+						</dict>
+						<dict>
+							<key>Bounds</key>
+							<string>{{382, 6}, {106, 40}}</string>
+							<key>Class</key>
+							<string>ShapedGraphic</string>
+							<key>ID</key>
+							<integer>80</integer>
+							<key>Shape</key>
+							<string>Rectangle</string>
+							<key>Text</key>
+							<dict>
+								<key>Text</key>
+								<string>{\rtf1\ansi\ansicpg1252\cocoartf1347\cocoasubrtf570
+\cocoascreenfonts1{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc
+
+\f0\fs24 \cf0 Identification module}</string>
+							</dict>
+						</dict>
+					</array>
+					<key>ID</key>
+					<integer>78</integer>
+				</dict>
 				<dict>
 					<key>Bounds</key>
 					<string>{{675, 212.28997826013006}, {94, 38}}</string>
